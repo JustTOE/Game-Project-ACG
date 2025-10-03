@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static org.lwjgl.glfw.GLFW.glfwGetTime;
 import static org.lwjgl.opengl.GL20.*;
 
 public class Shader {
@@ -38,7 +39,14 @@ public class Shader {
             System.err.println("Warning validating shader program: " + glGetProgramInfoLog(programId));
         }
 
-        glUseProgram(programId);
+    }
+
+    public void updatePulsatingColor() {
+        bind();
+        double timeValue = glfwGetTime();
+        double greenValue = (Math.sin(timeValue) / 2.0) + 0.5;
+        int colorLocation = glGetUniformLocation(programId, "customColor");
+        glUniform4f(colorLocation, 0.0f, (float)greenValue, 0.0f, 1.0f);
     }
 
     private int loadShader(String filePath, int type) {

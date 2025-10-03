@@ -4,6 +4,8 @@ import com.cezar.renderer.model.Model;
 import com.cezar.window.Window;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.glBindBuffer;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
@@ -29,7 +31,7 @@ public class RenderManager {
         // This sets the location of the vertex attribute to 0 and since we want to pass data to this vertex attribute, we pass in 0
         glEnableVertexAttribArray(0);
 
-        glDrawArrays(GL_TRIANGLES, 0, model.getVertex_count());
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         glDisableVertexAttribArray(0);
         glBindVertexArray(0);

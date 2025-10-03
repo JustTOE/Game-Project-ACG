@@ -14,9 +14,15 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class Main {
 
     public static float[] vertices = new float[] {
-            -0.5f, -0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f,
-             0.0f,  0.5f, 0.0f
+            0.5f,  0.5f, 0.0f,      1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, 0.0f,      0.0f, 1.0f, 0.0f,
+            -0.5f, -0.5f, 0.0f,     0.0f, 0.0f, 1.0f,
+            -0.5f,  0.5f, 0.0f,      1.0f, 1.0f, 1.0f
+    };
+
+    public static int[] indices = new int[] {
+            0, 1, 3,
+            1, 2, 3
     };
 
     public static void main(String[] args) {
@@ -38,9 +44,10 @@ public class Main {
         Shader shader = new Shader("src/main/resources/shaders/vertex.glsl", "src/main/resources/shaders/fragment.glsl");
         RenderManager renderManager = new RenderManager(window, shader);
         ModelLoader modelLoader = new ModelLoader();
-        Model model = modelLoader.loadModel(vertices);
+        Model model = modelLoader.loadModel(vertices, indices);
 
         while(!glfwWindowShouldClose(window.getHandle())) {
+            //shader.updatePulsatingColor(); // just some testing, ignore this
             renderManager.renderModel(model);
 
             glfwSwapBuffers(window.getHandle());
@@ -52,4 +59,6 @@ public class Main {
         window.destroy();
         glfwTerminate();
     }
+
+
 }
