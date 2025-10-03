@@ -58,9 +58,6 @@ public class Window {
 
 
 
-
-
-
     public void setWidth(int width) {
         glfwSetWindowSize(handle, width, this.height);
         this.width = width;
