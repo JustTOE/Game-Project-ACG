@@ -9,6 +9,8 @@ import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
+import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Main {
@@ -38,11 +40,14 @@ public class Main {
         Window window = new Window(800, 600, "Shadow Labyrinth", NULL, NULL);
 
         GL.createCapabilities();
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glViewport(0, 0, 800, 600);
 
-        Shader shader = new Shader("src/main/resources/shaders/vertex.glsl", "src/main/resources/shaders/fragment.glsl");
-        RenderManager renderManager = new RenderManager(window, shader);
+        Shader shader = new Shader();
+        shader.attach("src/main/resources/shaders/vertex.glsl", GL_VERTEX_SHADER);
+        shader.attach("src/main/resources/shaders/fragment.glsl", GL_FRAGMENT_SHADER);
+        shader.link();
+
+        RenderManager renderManager = new RenderManager(shader);
         ModelLoader modelLoader = new ModelLoader();
         Model model = modelLoader.loadModel(vertices, indices);
 

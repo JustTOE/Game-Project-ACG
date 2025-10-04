@@ -20,14 +20,14 @@ public class ModelLoader {
     private final List<Integer> EBOs = new ArrayList<>();
 
     public Model loadModel(float[] vertices, int[] indices) {
-        int id = createVAO();
-        glBindVertexArray(id);
+        int vaoId = createVAO();
+        glBindVertexArray(vaoId);
 
-        prepareRender(3, vertices, indices);
+        prepareForRender(3, vertices, indices);
 
         glBindVertexArray(0);
 
-        return new Model(id, indices.length);
+        return new Model(vaoId, indices.length);
     }
 
     public int createVAO() {
@@ -48,32 +48,34 @@ public class ModelLoader {
         return ebo;
     }
 
-    public void prepareRender(int vertex_count, float[] vertices, int[] indices) {
+    private void prepareForRender(int vertexCount, float[] vertices, int[] indices) {
         int vbo = createVBO();
         int ebo = createEBO();
 
-        // Buffering the vertex position data
-        FloatBuffer vertices_data_buffer = BufferUtils.createFloatBuffer(vertices.length);
-        vertices_data_buffer.put(vertices);
-        vertices_data_buffer.flip();
+        // Upload vertex data to VBO
+        FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(vertices.length);
+        vertexBuffer.put(vertices);
+        vertexBuffer.flip();
 
-        // Moving the data from the FloatBuffer to the openGL buffers
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, vertices_data_buffer, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, vertex_count, GL_FLOAT, false, 6 * Float.BYTES, 0);
+        // Configure vertex attribute pointers (while VAO is bound)
+        // Position attribute (location = 0)
+        glVertexAttribPointer(0, vertexCount, GL_FLOAT, false, 6 * Float.BYTES, 0);
         glEnableVertexAttribArray(0);
 
+        // Color attribute (location = 1)
         glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * Float.BYTES, 3 * Float.BYTES);
         glEnableVertexAttribArray(1);
 
-        // Buffering indices data
-        IntBuffer indices_data_buffer = BufferUtils.createIntBuffer(indices.length);
-        indices_data_buffer.put(indices);
-        indices_data_buffer.flip();
+        // Upload indices to EBO (must be bound while VAO is active)
+        IntBuffer indexBuffer = BufferUtils.createIntBuffer(indices.length);
+        indexBuffer.put(indices);
+        indexBuffer.flip();
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_data_buffer, GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer, GL_STATIC_DRAW);
     }
 
     public void cleanup() {
@@ -83,6 +85,10 @@ public class ModelLoader {
 
         for(int vbo : VBOs) {
             glDeleteBuffers(vbo);
+        }
+
+        for(int ebo : EBOs) {
+            glDeleteBuffers(ebo);
         }
     }
 

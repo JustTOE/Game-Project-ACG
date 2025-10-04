@@ -1,19 +1,19 @@
 package com.cezar.renderer.model;
 
 public class Model {
-    int vao;
-    int vertex_count;
+    private final int vao;
+    private final int vertexCount;
 
-    public Model(int vao, int vertex_count) {
+    public Model(int vao, int vertexCount) {
         this.vao = vao;
-        this.vertex_count = vertex_count;
+        this.vertexCount = vertexCount;
     }
 
     public int getVAO() {
         return vao;
     }
 
-    public int getVertex_count() {
-        return vertex_count;
+    public int getVertexCount() {
+        return vertexCount;
     }
 }

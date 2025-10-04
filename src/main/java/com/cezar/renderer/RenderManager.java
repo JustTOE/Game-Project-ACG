@@ -1,42 +1,29 @@
 package com.cezar.renderer;
 
 import com.cezar.renderer.model.Model;
-import com.cezar.window.Window;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.glBindBuffer;
-import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
 public class RenderManager {
-    private final Window window;
     private final Shader shader;
 
-    public RenderManager(Window window, Shader shader) {
-        this.window = window;
+    public RenderManager(Shader shader) {
         this.shader = shader;
     }
 
     public void renderModel(Model model) {
         clear();
-        shader.bind();
+        shader.useProgram();
 
-        // We bind the VAO to the context
+        // After
         glBindVertexArray(model.getVAO());
-        // And then enable the first attribute of the VAO
-        // Remember that in this VAO we are storing THE POSITION of each vertex
-        // If you check the vertex.glsl file you will see that we specify the location of the position vertex attribute as layout (location = 0)
-        // This sets the location of the vertex attribute to 0 and since we want to pass data to this vertex attribute, we pass in 0
-        glEnableVertexAttribArray(0);
+        shader.validate();
 
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-        glDisableVertexAttribArray(0);
+        glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
 
-        shader.unbind();
+        shader.freeProgram();
     }
 
     public void clear() {
