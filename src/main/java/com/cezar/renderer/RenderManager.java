@@ -1,6 +1,7 @@
 package com.cezar.renderer;
 
 import com.cezar.renderer.model.Model;
+import com.cezar.renderer.texture.Texture;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
@@ -12,11 +13,11 @@ public class RenderManager {
         this.shader = shader;
     }
 
-    public void renderModel(Model model) {
+    public void renderModel(Model model, Texture texture) {
         clear();
         shader.useProgram();
 
-        // After
+        glBindTexture(GL_TEXTURE_2D, texture.getTextureId());
         glBindVertexArray(model.getVAO());
         shader.validate();
 

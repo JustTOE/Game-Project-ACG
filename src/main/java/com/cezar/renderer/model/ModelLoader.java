@@ -62,12 +62,16 @@ public class ModelLoader {
 
         // Configure vertex attribute pointers (while VAO is bound)
         // Position attribute (location = 0)
-        glVertexAttribPointer(0, vertexCount, GL_FLOAT, false, 6 * Float.BYTES, 0);
+        glVertexAttribPointer(0, vertexCount, GL_FLOAT, false, 8 * Float.BYTES, 0);
         glEnableVertexAttribArray(0);
 
         // Color attribute (location = 1)
-        glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * Float.BYTES, 3 * Float.BYTES);
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, 8 * Float.BYTES, 3 * Float.BYTES);
         glEnableVertexAttribArray(1);
+
+        // Texture attribute (location = 2)
+        glVertexAttribPointer(2, 2, GL_FLOAT, false, 8 * Float.BYTES, 6 * Float.BYTES);
+        glEnableVertexAttribArray(2);
 
         // Upload indices to EBO (must be bound while VAO is active)
         IntBuffer indexBuffer = BufferUtils.createIntBuffer(indices.length);

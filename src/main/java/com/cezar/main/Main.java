@@ -4,8 +4,11 @@ import com.cezar.renderer.RenderManager;
 import com.cezar.renderer.Shader;
 import com.cezar.renderer.model.Model;
 import com.cezar.renderer.model.ModelLoader;
+import com.cezar.renderer.texture.Texture;
+import com.cezar.renderer.texture.TextureLoader;
 import com.cezar.window.Window;
 import org.lwjgl.opengl.GL;
+import org.w3c.dom.Text;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -16,10 +19,11 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class Main {
 
     public static float[] vertices = new float[] {
-            0.5f,  0.5f, 0.0f,      1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f, 0.0f,      0.0f, 1.0f, 0.0f,
-            -0.5f, -0.5f, 0.0f,     0.0f, 0.0f, 1.0f,
-            -0.5f,  0.5f, 0.0f,      1.0f, 1.0f, 1.0f
+//           Position(X,Y,Z)          Color(R,G,B)
+            0.5f,  0.5f, 0.0f,      1.0f, 0.0f, 0.0f,       1.0f, 1.0f,
+            0.5f, -0.5f, 0.0f,      0.0f, 1.0f, 0.0f,       1.0f, 0.0f,
+            -0.5f, -0.5f, 0.0f,     0.0f, 0.0f, 1.0f,       0.0f, 0.0f,
+            -0.5f,  0.5f, 0.0f,      1.0f, 1.0f, 1.0f,       0.0f, 1.0f
     };
 
     public static int[] indices = new int[] {
@@ -48,12 +52,21 @@ public class Main {
         shader.link();
 
         RenderManager renderManager = new RenderManager(shader);
+
+        TextureLoader textureLoader = new TextureLoader();
+        Texture texture = textureLoader.loadTexture("src/main/resources/textures/texture.jpg");
+        int textureId = textureLoader.generateTexture(texture);
+        texture.setTextureId(textureId);
+
+        shader.useProgram();
+        shader.setInt("customTexture", 0);
+        shader.freeProgram();
+
         ModelLoader modelLoader = new ModelLoader();
         Model model = modelLoader.loadModel(vertices, indices);
 
         while(!glfwWindowShouldClose(window.getHandle())) {
-            //shader.updatePulsatingColor(); // just some testing, ignore this
-            renderManager.renderModel(model);
+            renderManager.renderModel(model, texture);
 
             glfwSwapBuffers(window.getHandle());
             glfwPollEvents();

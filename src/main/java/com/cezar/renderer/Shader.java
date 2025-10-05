@@ -1,5 +1,7 @@
 package com.cezar.renderer;
 
+import org.lwjgl.opengl.GL20;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -83,5 +85,17 @@ public class Shader {
 
     public int getProgramId() {
         return programId;
+    }
+
+    public void setBoolean(String name, boolean value) {
+        glUniform1i(glGetUniformLocation(programId, name), value ? 1 : 0);
+    }
+
+    public void setFloat(String name, float value) {
+        glUniform1f(glGetUniformLocation(programId, name), value);
+    }
+
+    public void setInt(String name, int value) {
+        glUniform1i(glGetUniformLocation(programId, name), value);
     }
 }
