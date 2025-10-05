@@ -1,6 +1,5 @@
 package com.cezar.renderer.texture;
 
-import com.sun.source.doctree.TextTree;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.stb.STBImage;
 

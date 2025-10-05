@@ -19,11 +19,11 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class Main {
 
     public static float[] vertices = new float[] {
-//           Position(X,Y,Z)          Color(R,G,B)
+//           Position(X,Y,Z)          Color(R,G,B)         Texture coords(relative to model)
             0.5f,  0.5f, 0.0f,      1.0f, 0.0f, 0.0f,       1.0f, 1.0f,
             0.5f, -0.5f, 0.0f,      0.0f, 1.0f, 0.0f,       1.0f, 0.0f,
             -0.5f, -0.5f, 0.0f,     0.0f, 0.0f, 1.0f,       0.0f, 0.0f,
-            -0.5f,  0.5f, 0.0f,      1.0f, 1.0f, 1.0f,       0.0f, 1.0f
+            -0.5f,  0.5f, 0.0f,      1.0f, 1.0f, 1.0f,      0.0f, 1.0f
     };
 
     public static int[] indices = new int[] {

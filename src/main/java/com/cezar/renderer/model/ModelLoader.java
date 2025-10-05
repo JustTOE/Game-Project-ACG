@@ -25,6 +25,9 @@ public class ModelLoader {
 
         prepareForRender(3, vertices, indices);
 
+        // Wireframe mode
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
         glBindVertexArray(0);
 
         return new Model(vaoId, indices.length);
