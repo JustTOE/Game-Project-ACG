@@ -1,14 +1,11 @@
-package com.cezar.renderer;
+package com.cezar.engine.renderer;
 
-import com.cezar.renderer.model.Model;
-import com.cezar.renderer.texture.Texture;
+import com.cezar.engine.renderer.model.Model;
+import com.cezar.engine.renderer.texture.Texture;
 import org.joml.Matrix4f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
-import java.nio.channels.FileLock;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.glGetUniformLocation;
@@ -23,19 +20,11 @@ public class RenderManager {
     }
 
     public void renderModel(Model model, Texture texture) {
-        clear();
-        shader.useProgram();
-
         glBindTexture(GL_TEXTURE_2D, texture.getTextureId());
         glBindVertexArray(model.getVAO());
-        shader.validate();
 
-        doMaths(model, texture);
-
-        glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 36/*model.getVertexCount()*/, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
-
-        shader.freeProgram();
     }
 
     public void clear() {

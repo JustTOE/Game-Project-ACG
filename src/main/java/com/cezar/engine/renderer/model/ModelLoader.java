@@ -1,4 +1,4 @@
-package com.cezar.renderer.model;
+package com.cezar.engine.renderer.model;
 
 import org.lwjgl.BufferUtils;
 
@@ -23,7 +23,7 @@ public class ModelLoader {
         int vaoId = createVAO();
         glBindVertexArray(vaoId);
 
-        prepareForRender(3, vertices, indices);
+        prepareForRender(vertices, indices);
 
         // Wireframe mode
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -51,7 +51,7 @@ public class ModelLoader {
         return ebo;
     }
 
-    private void prepareForRender(int vertexCount, float[] vertices, int[] indices) {
+    private void prepareForRender(float[] vertices, int[] indices) {
         int vbo = createVBO();
         int ebo = createEBO();
 
@@ -65,7 +65,7 @@ public class ModelLoader {
 
         // Configure vertex attribute pointers (while VAO is bound)
         // Position attribute (location = 0)
-        glVertexAttribPointer(0, vertexCount, GL_FLOAT, false, 8 * Float.BYTES, 0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 8 * Float.BYTES, 0);
         glEnableVertexAttribArray(0);
 
         // Color attribute (location = 1)

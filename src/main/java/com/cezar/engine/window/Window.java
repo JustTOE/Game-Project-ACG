@@ -1,17 +1,10 @@
-package com.cezar.window;
+package com.cezar.engine.window;
 
-import com.cezar.utils.OSUtils;
-import org.lwjgl.*;
+import com.cezar.engine.utils.OSUtils;
 import org.lwjgl.glfw.*;
-import org.lwjgl.opengl.*;
-import org.lwjgl.system.*;
 
-import java.nio.*;
-
-import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public class Window {
@@ -54,8 +47,6 @@ public class Window {
     public void frame_buffer_size_callback(long window, int width, int height) {
         glViewport(0, 0, width, height);
     }
-
-
 
 
     public void setWidth(int width) {

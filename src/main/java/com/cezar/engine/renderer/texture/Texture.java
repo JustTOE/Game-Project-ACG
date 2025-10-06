@@ -1,4 +1,4 @@
-package com.cezar.renderer.texture;
+package com.cezar.engine.renderer.texture;
 
 import org.lwjgl.stb.STBImage;
 

@@ -1,7 +1,6 @@
-package com.cezar.renderer.texture;
+package com.cezar.engine.renderer.texture;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.stb.STBImage;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;

@@ -1,6 +1,4 @@
-package com.cezar.renderer;
-
-import org.lwjgl.opengl.GL20;
+package com.cezar.engine.renderer;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.lwjgl.glfw.GLFW.glfwGetTime;
 import static org.lwjgl.opengl.GL20.*;
 
 public class Shader {
@@ -23,6 +20,7 @@ public class Shader {
     public void attach(String path, int type) {
         int shaderId = loadShaderFromFile(path, type);
         glAttachShader(programId, shaderId);
+        shaderHandles.add(shaderId);
     }
 
     public void link() {
