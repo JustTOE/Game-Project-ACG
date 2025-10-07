@@ -3,6 +3,7 @@ package com.cezar.engine.window;
 import com.cezar.engine.maths.Camera;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.glfw.GLFWScrollCallback;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -22,6 +23,7 @@ public class InputManager {
 
     private GLFWCursorPosCallback cursorCallback;
     private GLFWKeyCallback keyCallback;
+    private GLFWScrollCallback scrollCallback;
 
     /**
      * Creates an InputManager bound to a specific camera
@@ -36,11 +38,15 @@ public class InputManager {
      * @param window The window to attach callbacks to
      */
     public void setupCallbacks(Window window) {
-        cursorCallback = GLFWCursorPosCallback.create((windowHandle, xPos, yPos) -> handleMouseMovement(xPos, yPos));
-        glfwSetCursorPosCallback(window.getHandle(), cursorCallback);
+        long windowHandle = window.getHandle();
+        cursorCallback = GLFWCursorPosCallback.create((wHandle, xPos, yPos) -> handleMouseMovement(xPos, yPos));
+        glfwSetCursorPosCallback(windowHandle, cursorCallback);
 
-        keyCallback = GLFWKeyCallback.create((windowHandle, key, scancode, action, mods) -> handleKeyPress(windowHandle, key, action));
-        glfwSetKeyCallback(window.getHandle(), keyCallback);
+        keyCallback = GLFWKeyCallback.create((wHandle, key, scancode, action, mods) -> handleKeyPress(windowHandle, key, action));
+        glfwSetKeyCallback(windowHandle, keyCallback);
+
+        scrollCallback = GLFWScrollCallback.create((wHandle, xOffset, yOffset) -> handleScroll(xOffset, yOffset));
+        glfwSetScrollCallback(windowHandle, scrollCallback);
     }
 
     /**
@@ -106,15 +112,26 @@ public class InputManager {
         }
     }
 
+    private void handleScroll(double xOffset, double yOffset) {
+        float fov = camera.getFov();
+        fov -= (float)yOffset;
+        if(fov < 1.0f) fov = 1.0f;
+        if(fov > 45.0f) fov = 45.0f;
+        camera.setFov(fov);
+    }
+
     /**
      * Cleanup callback resources
      */
     public void dispose() {
-        if (cursorCallback != null) {
+        if(cursorCallback != null) {
             cursorCallback.free();
         }
-        if (keyCallback != null) {
+        if(keyCallback != null) {
             keyCallback.free();
+        }
+        if(scrollCallback != null) {
+            scrollCallback.free();
         }
     }
 

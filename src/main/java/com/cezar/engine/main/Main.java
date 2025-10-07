@@ -14,11 +14,14 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
 
+import java.util.Vector;
+
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Main {
@@ -76,6 +79,21 @@ public class Main {
 
     public static int[] indices = new int[] {};
 
+    public static Vector3f cubePositions[] = new Vector3f[] {
+    new Vector3f( 0.0f,  0.0f,  0.0f),
+    new Vector3f( 2.0f,  5.0f, -15.0f),
+    new Vector3f(-1.5f, -2.2f, -2.5f),
+    new Vector3f(-3.8f, -2.0f, -12.3f),
+    new Vector3f( 2.4f, -0.4f, -3.5f),
+    new Vector3f(-1.7f,  3.0f, -7.5f),
+    new Vector3f( 1.3f, -2.0f, -2.5f),
+    new Vector3f( 1.5f,  2.0f, -2.5f),
+    new Vector3f( 1.5f,  0.2f, -1.5f),
+    new Vector3f(-1.3f,  1.0f, -1.5f)
+
+};
+
+
     public static void main(String[] args) {
         init();
     }
@@ -115,12 +133,11 @@ public class Main {
         modelTransform.setRotation(new Vector3f((float) Math.toRadians(-55.0f), 0.0f, 0.0f));
         model.setTransform(modelTransform);
 
-        // Projection matrix
-        Matrix4f projection = new Matrix4f();
-        projection.perspective((float) Math.toRadians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-
         // Camera object
         Camera camera = new Camera();
+
+        // Projection matrix (will be updated each frame)
+        Matrix4f projection = new Matrix4f();
 
         // InputManager for handling keyboard/mouse input
         InputManager inputManager = new InputManager(camera);
@@ -139,23 +156,35 @@ public class Main {
             // Process input
             inputManager.processInput(window, deltaTime);
 
+            // Update projection matrix with current FOV
+            projection.identity();
+            projection.perspective((float) Math.toRadians(camera.getFov()), 800.0f / 600.0f, 0.1f, 100.0f);
+
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             shader.useProgram();
 
-            // Set matrices
-            int modelLoc = glGetUniformLocation(shader.getProgramId(), "model");
+            // Set view and projection matrices (constant for all cubes)
             int viewLoc = glGetUniformLocation(shader.getProgramId(), "view");
             int projectionLoc = glGetUniformLocation(shader.getProgramId(), "projection");
-
-            glUniformMatrix4fv(modelLoc, false, modelTransform.getModelMatrix().get(new float[16]));
             glUniformMatrix4fv(viewLoc, false, camera.getLookAt().get(new float[16]));
             glUniformMatrix4fv(projectionLoc, false, projection.get(new float[16]));
 
             shader.setInt("customTexture", 0);
 
-            renderManager.renderModel(model, texture);
+            // Render multiple cubes
+            for(int i = 0; i < 10; i++) {
+                Matrix4f modelMatrix = new Matrix4f();
+                modelMatrix.translate(cubePositions[i]);
+                float angle = (float) Math.toRadians(20.0f * i);
+                modelMatrix.rotate(angle, new Vector3f(1.0f, 0.3f, 0.5f));
+
+                int modelLoc = glGetUniformLocation(shader.getProgramId(), "model");
+                glUniformMatrix4fv(modelLoc, false, modelMatrix.get(new float[16]));
+
+                renderManager.renderModel(model, texture);
+            }
 
             glfwSwapBuffers(window.getHandle());
             glfwPollEvents();

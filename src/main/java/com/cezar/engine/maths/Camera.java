@@ -17,10 +17,19 @@ public class Camera {
     private float pitch;
     private float mouseSensitivity = 0.1f;
 
+    private float fov;
+
     public Camera() {
         position = new Vector3f(0.0f, 0.0f, 3.0f);
         front = new Vector3f(0.0f, 0.0f, -1.0f); // looking down negative Z axis
         worldUp = new Vector3f(0.0f, 1.0f, 0.0f);
+
+        // Initialize FOV to standard 45 degrees
+        fov = 45.0f;
+
+        // Initialize yaw/pitch to match initial front vector
+        yaw = -90.0f; // Looking down -Z axis
+        pitch = 0.0f;
 
         updateCameraVectors();
         updateViewMatrix();
@@ -40,6 +49,27 @@ public class Camera {
         right = new Vector3f(front).cross(worldUp).normalize();
         // Calculate up vector
         up = new Vector3f(right).cross(front).normalize();
+    }
+
+    /**
+     * Process mouse movement to update camera orientation
+     * @param xOffset Mouse X offset
+     * @param yOffset Mouse Y offset
+     * @param constrainPitch Whether to constrain pitch to prevent flip
+     */
+    public void processMouseMovement(float xOffset, float yOffset, boolean constrainPitch) {
+        xOffset *= mouseSensitivity;
+        yOffset *= mouseSensitivity;
+
+        yaw += xOffset;
+        pitch += yOffset;
+
+        if (constrainPitch) {
+            if (pitch > 89.0f) pitch = 89.0f;
+            if (pitch < -89.0f) pitch = -89.0f;
+        }
+
+        updateCameraVectors();
     }
 
     /**
@@ -144,25 +174,12 @@ public class Camera {
         this.mouseSensitivity = mouseSensitivity;
     }
 
-    /**
-     * Process mouse movement to update camera orientation
-     * @param xOffset Mouse X offset
-     * @param yOffset Mouse Y offset
-     * @param constrainPitch Whether to constrain pitch to prevent flip
-     */
-    public void processMouseMovement(float xOffset, float yOffset, boolean constrainPitch) {
-        xOffset *= mouseSensitivity;
-        yOffset *= mouseSensitivity;
+    public float getFov() {
+        return fov;
+    }
 
-        yaw += xOffset;
-        pitch += yOffset;
-
-        if (constrainPitch) {
-            if (pitch > 89.0f) pitch = 89.0f;
-            if (pitch < -89.0f) pitch = -89.0f;
-        }
-
-        updateCameraVectors();
+    public void setFov(float fov) {
+        this.fov = fov;
     }
 }
 
