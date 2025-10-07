@@ -30,7 +30,10 @@ public class ModelLoader {
 
         glBindVertexArray(0);
 
-        return new Model(vaoId, indices.length);
+        // If no indices, vertex count is the number of vertices; otherwise it's the number of indices
+        boolean useIndexedRendering = indices.length > 0;
+        int vertexCount = useIndexedRendering ? indices.length : vertices.length / 8;
+        return new Model(vaoId, vertexCount, useIndexedRendering);
     }
 
     public int createVAO() {
@@ -53,7 +56,6 @@ public class ModelLoader {
 
     private void prepareForRender(float[] vertices, int[] indices) {
         int vbo = createVBO();
-        int ebo = createEBO();
 
         // Upload vertex data to VBO
         FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(vertices.length);
@@ -76,13 +78,16 @@ public class ModelLoader {
         glVertexAttribPointer(2, 2, GL_FLOAT, false, 8 * Float.BYTES, 6 * Float.BYTES);
         glEnableVertexAttribArray(2);
 
-        // Upload indices to EBO (must be bound while VAO is active)
-        IntBuffer indexBuffer = BufferUtils.createIntBuffer(indices.length);
-        indexBuffer.put(indices);
-        indexBuffer.flip();
+        // Upload indices to EBO only if provided
+        if (indices.length > 0) {
+            int ebo = createEBO();
+            IntBuffer indexBuffer = BufferUtils.createIntBuffer(indices.length);
+            indexBuffer.put(indices);
+            indexBuffer.flip();
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer, GL_STATIC_DRAW);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer, GL_STATIC_DRAW);
+        }
     }
 
     public void cleanup() {

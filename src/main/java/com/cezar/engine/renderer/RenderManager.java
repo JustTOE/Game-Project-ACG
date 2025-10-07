@@ -23,7 +23,12 @@ public class RenderManager {
         glBindTexture(GL_TEXTURE_2D, texture.getTextureId());
         glBindVertexArray(model.getVAO());
 
-        glDrawElements(GL_TRIANGLES, 36/*model.getVertexCount()*/, GL_UNSIGNED_INT, 0);
+        if (model.useIndexedRendering()) {
+            glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, 0);
+        } else {
+            glDrawArrays(GL_TRIANGLES, 0, model.getVertexCount());
+        }
+
         glBindVertexArray(0);
     }
 
