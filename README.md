@@ -1,44 +1,71 @@
-# Shadow Labyrinth: Descent into the Hollowed Keep
+# Among The Darkness
 
 ## Core Concept
-A dark fantasy roguelike RPG where you awaken in a procedurally generated dungeon maze with no memory of how you arrived. A powerful entity called **The Warden** has sensed your presence and is slowly hunting you through the corridors. You must choose your path: grow strong enough to defeat it, escape before it finds you, or discover the truth of why you're trapped here.
+A dark fantasy roguelike RPG where you awaken in a procedurally generated dungeon maze with no memory of how you arrived. An entity called **Manifestation** has sensed your presence and is slowly hunting you through the corridors. Collect scattered memories, learn about your past and forge your faith.
+
+## Characters
+
+### Main Character
+**Ash Thornfield** is a 24 year old lady who finds herself in a bizzarre and hostile world. She doesn't seem to recall anything, her memory is lost. Ash went through a traumatic life event (car crash leading to passing of her fiance. She blames herself for everything.) and is suffering severe depression. She's wandering around, trying to find information about herself and this place, but she doesn't yet realize that everything around her is her own mind's creation. Ash used to like reading a lot of books when she was a child and was a die hard fan of fantasy stories. The world created by her mind received it's darker tone due to the current state of her mental health. 
+
+### Soul Embodiment (Side Characters)
+**Thunder (courage), Aeris (determination), Selene (resilience), Vivian (curiosity), Rain (cowardice), Serephine (despair), Mist (fragility), Ivy (indifference)** are side characters that Ash will meet throughout her journey representing personality traits. Depending on the outcome of their interractions she will face a different faith. 
+
+### Reminiscence (Friendly NPCs)
+- **Miriam the Cartographer** - Sells map fragments that unlock new maze sections, allowing progression
+- **Dusk the Knight** - Offers Soul Cards in exchange for Tear Drops (currency)
+- **Sister Celeste** - Heals you in exchange for Tear Drops
+- **Wandering Mask** - Gives out location of hidden bosses that drop Legendary Soul Cards
+- **Echo (Mysterious Child having ghost like appearance)** - Speaks in riddles about Manifestation's nature
+
+### Main Enemy
+**Manifestation (name changed to "The Hollow Veil" later in the story)** is the main enemy in the game that cannot be stricken down until a certain turning point when Ash will have to face it. It will be revealed that **Manifestation** is a part of Ash herself, representing her trauma and self hatred. 
+
 
 ## Gameplay Loop
 
-### The Hunt Mechanic
-- **The Warden** spawns at a distant point in the maze and begins methodically tracking you
+### Manifestation
+- **** spawns at a distant point in the maze and begins methodically tracking the player
 - Visual/audio cues intensify as it gets closer (distant footsteps, walls trembling, shadows growing longer)
-- The Warden moves in real-time but slowly—creating constant tension without rushing the player
-- If encountered too early, The Warden is nearly invincible, forcing retreat or death
+- The Hollow Veil moves in real-time but slowly—creating constant tension without rushing the player
+- If encountered too early in the story, The Hollow Veil is *nearly* invincible, forcing retreat or death
 
 ### Combat & Progression (RPG Elements)
-- **Smaller enemies** ("Hollows") patrol the maze—corrupted souls trapped like you
-- Turn-based or real-time with pause combat system
-- Defeating Hollows grants:
-  - **Essence** (experience points)
-  - **Memory Fragments** (skill points)
-  - **Equipment** (weapons, armor, talismans)
-- Level up stats: Strength, Vitality, Arcane, Agility
-- Skill trees based on playstyle (warrior, mage, rogue, hybrid)
+- **Smaller enemies** (The Lost One) patrol the area and dealing damage during encounters
+- Real time combat system via Soul Cards
+- Defeating The Lost One grants:
+  - **Essence** (points to enhance Soul Cards stats)
+  - **Memory Shard** (points to unlock active skills)
+  - **Tear Drop** (currency, used with merchant NPCs)
+  - **Soul Card (with a small drop rate)** (weapon)
 
-### The Three Paths to Victory
+### Soul Cards
+- Used as a weapon
+- Have static main stat and modifyable sub stat
+- Card Overlapping: merge 2 cards of same rarity to obtain 1 card having sub stats from 2 merged cards 
+- Card Incineration: discard a card to obtain Essence at a lowered rate
+- Card Rarity: Common, Rare, Epic, Legendary. Common rarity cards drop most often and are the weakest while legendary cards are hidden behind a mini boss and can only be obtained once. Legendary cards have highest main stat and have a special effect (creating burning zone, freezing, pulling enemies in etc)
 
-**Path 1: The Conqueror**
-- Farm Hollows until reaching **Level 15+** with proper gear
-- Confront The Warden in a challenging boss fight
-- Unlock true ending: "The Warden's Crown"
+### Three Different Endings
 
-**Path 2: The Escapist**
-- Navigate the maze efficiently using map fragments and NPC hints
-- Find the **Exit Seal** (hidden in a specific maze region)
-- Requires solving environmental puzzles to unlock it
-- Unlock ending: "Freedom's Price"
+**Wake up, Ash Thornfield. (True Ending)**
+- Choosing right dialogue options with each of the Soul Embodiments Ash realizes the true nature of Manifestation (name changed to The Hollow Veil)
+- Ash confronts The Hollow Veil and defeats it
+- Ash comes out from the state of psychosis and begins to work on herself, fixing her life
 
-**Path 3: The Seeker** (Hidden Path)
-- Collect all **5 Lore Tablets** scattered in the maze
-- Learn the truth: you and The Warden are connected
-- Unlock special ritual to merge/banish The Warden without fighting
-- Unlock ending: "Remembered Truth"
+**I am the strongest! (Neutral Ending)**
+- Choosing equivalent amount of right and wrong dialogue options Ash doesn't uncover who Manifestation truly is
+- Ash still defeats Manifestation
+- Ash remains in the imaginary world feeding up to her delusions (the game doesn't reveal that to the player)
+
+**Lost in The Woods (Bad Ending)**
+- Choosing bad dialogue options Ash progressively loses motivation 
+- She succumbs to her negative thoughts and lets Manifestation devour her
+- It is revealed that Ash shot herself in real life
+
+**How did we get here? (Secret Ending)**
+- Defeat Manifestation earlier than intended
+- The game throws a fake error, deletes all progress and crashes
 
 ## Maze Design
 
@@ -48,48 +75,34 @@ A dark fantasy roguelike RPG where you awaken in a procedurally generated dungeo
 - Each run features:
   - Different layout
   - Randomized NPC locations
-  - Variable Hollow spawn points
-  - Shuffled loot/tablet locations
+  - Variable mob spawn points
+  - Shuffled loot locations
 
 ### Environmental Storytelling
 - Bloodstains, scratch marks on walls, skeletal remains
-- Faded journals revealing previous victims' attempts
+- Faded journals revealing Ash's past
 - Arcane symbols that hint at maze rules
 - Breakable walls hiding shortcuts or treasure
 
-## NPC System
-
-### The Lost Ones (Friendly NPCs)
-Non-aggressive souls who retain some humanity:
-
-1. **Miriam the Cartographer** - Sells map fragments showing maze sections
-2. **Dusk the Hollow Knight** - Offers combat training (respec points)
-3. **Sister Celeste** - Heals you in exchange for Memory Fragments
-4. **The Chronicler** - Trades lore tablets' locations for rare items
-5. **Echo (Mysterious Child)** - Speaks in riddles about The Warden's nature
-
 ### NPC Interactions
-- Dialogue trees with choices affecting relationships
+- Dialogue trees with choices affecting the final outcome
 - Can barter items, services, or information
 - Some NPCs have their own mini-quests
-- Certain NPCs reveal they're not as "friendly" as they seem (late-game twist potential)
 
 ## Atmospheric Features
 
 ### Tension Mechanics
-- **Sanity system**: Spending too long near The Warden decreases sanity, causing visual distortions
-- **Light sources**: Torches reveal more but attract Hollows; darkness hides you from The Warden
-- **Sound design**: Dripping water, distant screams, The Warden's breathing growing louder
+- **Sanity system**: Spending too long near Manifestation decreases sanity, causing visual distortions and taunting audio hallucinations
+- **Light sources**: Lantern reveals more area around but attracts The Lost Ones; darkness hides you from Manifestation
+- **Sound design**: Dripping water, distant screams, Manifestation's breathing growing louder
 
 ### Dynamic Events
-- Hollow swarms when staying in one area too long
+- The Lost Ones swarm when staying in one area too long
 - Environmental hazards (collapsing floors, poison gas rooms)
-- "Safe rooms" where The Warden cannot enter (limited)
 
-## Replayability
-- Multiple character classes with unique starting abilities
-- Daily/weekly challenge mazes with leaderboards
-- Unlockable modifiers (harder enemies, limited healing, permadeath mode)
-- New Game+ with stronger Warden and hidden secret areas
+## Replayability (if we have enough time)
+- Hardcore mode with stronger enemies, less resources and even lower survivability.
 
+
+*Everything here is a subject to be changed/adjusted*
 ---
