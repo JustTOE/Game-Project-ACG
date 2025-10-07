@@ -2,14 +2,8 @@ package com.cezar.engine.renderer;
 
 import com.cezar.engine.renderer.model.Model;
 import com.cezar.engine.renderer.texture.Texture;
-import org.joml.Matrix4f;
-import org.lwjgl.BufferUtils;
-
-import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL20.glGetUniformLocation;
-import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
 public class RenderManager {
@@ -38,19 +32,6 @@ public class RenderManager {
 
     public void dispose() {
         shader.dispose();
-    }
-
-    // Rotate and Scale
-    public void doMaths(Model model, Texture texture) {
-        Matrix4f trans = new Matrix4f(); // Creates identity matrix by default
-        trans.rotate((float) Math.toRadians(90.0f), 0.0f, 0.0f, 1.0f);
-        trans.scale(0.5f, 0.5f, 0.5f);
-
-        int transformLoc = glGetUniformLocation(model.getVAO(), "transform");
-        FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(16);
-        trans.get(floatBuffer);
-
-        glUniformMatrix4fv(transformLoc, false, floatBuffer);
     }
 
 }

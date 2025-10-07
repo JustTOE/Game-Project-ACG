@@ -1,5 +1,8 @@
 package com.cezar.engine.renderer;
 
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -95,5 +98,22 @@ public class Shader {
 
     public void setInt(String name, int value) {
         glUniform1i(glGetUniformLocation(programId, name), value);
+    }
+
+    public void setMatrix4f(String name, Matrix4f matrix) {
+        int location = glGetUniformLocation(programId, name);
+        float[] buffer = new float[16];
+        matrix.get(buffer);
+        glUniformMatrix4fv(location, false, buffer);
+    }
+
+    public void setVector3f(String name, Vector3f vector) {
+        int location = glGetUniformLocation(programId, name);
+        glUniform3f(location, vector.x, vector.y, vector.z);
+    }
+
+    public void setVector3f(String name, float x, float y, float z) {
+        int location = glGetUniformLocation(programId, name);
+        glUniform3f(location, x, y, z);
     }
 }

@@ -1,5 +1,6 @@
 package com.cezar.engine.renderer.texture;
 
+import com.cezar.engine.renderer.ResourceManager;
 import org.lwjgl.BufferUtils;
 
 import java.nio.ByteBuffer;
@@ -9,7 +10,20 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 import static org.lwjgl.stb.STBImage.*;
 
+/**
+ * Loads textures from disk and uploads them to the GPU.
+ * Integrates with ResourceManager for centralized cleanup.
+ */
 public class TextureLoader {
+    private final ResourceManager resourceManager;
+
+    /**
+     * Creates a TextureLoader that registers textures with the given ResourceManager
+     * @param resourceManager The resource manager to track created textures
+     */
+    public TextureLoader(ResourceManager resourceManager) {
+        this.resourceManager = resourceManager;
+    }
 
     public Texture loadTexture(String fileName) {
         IntBuffer width = BufferUtils.createIntBuffer(1);
@@ -40,6 +54,9 @@ public class TextureLoader {
         glGenerateMipmap(GL_TEXTURE_2D);
 
         stbi_image_free(texture.getImageData());
+
+        // Register texture with ResourceManager for cleanup
+        resourceManager.registerTexture(textureId);
 
         return textureId;
     }

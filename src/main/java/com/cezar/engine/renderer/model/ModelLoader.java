@@ -1,23 +1,31 @@
 package com.cezar.engine.renderer.model;
 
+import com.cezar.engine.renderer.ResourceManager;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.*;
 
-
+/**
+ * Factory for creating OpenGL models from vertex data.
+ * Manages VBO, VAO, and EBO creation and configuration.
+ * Integrates with ResourceManager for centralized cleanup.
+ */
 public class ModelLoader {
+    private final ResourceManager resourceManager;
 
-    private final List<Integer> VBOs = new ArrayList<>();
-    private final List<Integer> VAOs = new ArrayList<>();
-    private final List<Integer> EBOs = new ArrayList<>();
+    /**
+     * Creates a ModelLoader that registers resources with the given ResourceManager
+     * @param resourceManager The resource manager to track created resources
+     */
+    public ModelLoader(ResourceManager resourceManager) {
+        this.resourceManager = resourceManager;
+    }
 
     public Model loadModel(float[] vertices, int[] indices) {
         int vaoId = createVAO();
@@ -34,24 +42,6 @@ public class ModelLoader {
         boolean useIndexedRendering = indices.length > 0;
         int vertexCount = useIndexedRendering ? indices.length : vertices.length / 8;
         return new Model(vaoId, vertexCount, useIndexedRendering);
-    }
-
-    public int createVAO() {
-        int vao = glGenVertexArrays();
-        VAOs.add(vao);
-        return vao;
-    }
-
-    public int createVBO() {
-        int vbo = glGenBuffers();
-        VBOs.add(vbo);
-        return vbo;
-    }
-
-    public int createEBO() {
-        int ebo = glGenBuffers();
-        EBOs.add(ebo);
-        return ebo;
     }
 
     private void prepareForRender(float[] vertices, int[] indices) {
@@ -90,18 +80,21 @@ public class ModelLoader {
         }
     }
 
-    public void cleanup() {
-        for(int vao : VAOs) {
-            glDeleteVertexArrays(vao);
-        }
-
-        for(int vbo : VBOs) {
-            glDeleteBuffers(vbo);
-        }
-
-        for(int ebo : EBOs) {
-            glDeleteBuffers(ebo);
-        }
+    private int createVAO() {
+        int vao = glGenVertexArrays();
+        resourceManager.registerVAO(vao);
+        return vao;
     }
 
+    private int createVBO() {
+        int vbo = glGenBuffers();
+        resourceManager.registerVBO(vbo);
+        return vbo;
+    }
+
+    private int createEBO() {
+        int ebo = glGenBuffers();
+        resourceManager.registerEBO(ebo);
+        return ebo;
+    }
 }
