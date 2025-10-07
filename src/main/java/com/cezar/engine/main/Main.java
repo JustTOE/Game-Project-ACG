@@ -1,5 +1,6 @@
 package com.cezar.engine.main;
 
+import com.cezar.engine.maths.Camera;
 import com.cezar.engine.maths.Transform;
 import com.cezar.engine.renderer.RenderManager;
 import com.cezar.engine.renderer.Shader;
@@ -7,11 +8,14 @@ import com.cezar.engine.renderer.model.Model;
 import com.cezar.engine.renderer.model.ModelLoader;
 import com.cezar.engine.renderer.texture.Texture;
 import com.cezar.engine.renderer.texture.TextureLoader;
+import com.cezar.engine.window.InputManager;
 import com.cezar.engine.window.Window;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -86,6 +90,9 @@ public class Main {
 
         GL.createCapabilities();
         glViewport(0, 0, 800, 600);
+
+        glfwSetInputMode(window.getHandle(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
         glEnable(GL_DEPTH_TEST);
 
         Shader shader = new Shader();
@@ -108,15 +115,29 @@ public class Main {
         modelTransform.setRotation(new Vector3f((float) Math.toRadians(-55.0f), 0.0f, 0.0f));
         model.setTransform(modelTransform);
 
-        // View matrix
-        Matrix4f view = new Matrix4f();
-        view.translate(new Vector3f(0.0f, 0.0f, -3.0f), view);
-
         // Projection matrix
         Matrix4f projection = new Matrix4f();
         projection.perspective((float) Math.toRadians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
+        // Camera object
+        Camera camera = new Camera();
+
+        // InputManager for handling keyboard/mouse input
+        InputManager inputManager = new InputManager(camera);
+        inputManager.setupCallbacks(window);
+
+        // Delta time tracking for frame-rate independent movement
+        float deltaTime = 0.0f;
+        float lastFrame = 0.0f;
+
         while(!glfwWindowShouldClose(window.getHandle())) {
+            // Calculate delta time
+            float currentFrame = (float) glfwGetTime();
+            deltaTime = currentFrame - lastFrame;
+            lastFrame = currentFrame;
+
+            // Process input
+            inputManager.processInput(window, deltaTime);
 
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -128,10 +149,8 @@ public class Main {
             int viewLoc = glGetUniformLocation(shader.getProgramId(), "view");
             int projectionLoc = glGetUniformLocation(shader.getProgramId(), "projection");
 
-            modelTransform.setRotation((new Vector3f((float) (glfwGetTime() * Math.toRadians(50.0f)))));
-
             glUniformMatrix4fv(modelLoc, false, modelTransform.getModelMatrix().get(new float[16]));
-            glUniformMatrix4fv(viewLoc, false, view.get(new float[16]));
+            glUniformMatrix4fv(viewLoc, false, camera.getLookAt().get(new float[16]));
             glUniformMatrix4fv(projectionLoc, false, projection.get(new float[16]));
 
             shader.setInt("customTexture", 0);
@@ -145,9 +164,9 @@ public class Main {
         shader.freeProgram();
         renderManager.dispose();
         modelLoader.cleanup();
+        inputManager.dispose();
         window.destroy();
         glfwTerminate();
     }
-
 
 }
