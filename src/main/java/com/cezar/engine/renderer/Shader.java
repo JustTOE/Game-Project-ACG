@@ -1,5 +1,6 @@
 package com.cezar.engine.renderer;
 
+import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -105,6 +106,13 @@ public class Shader {
         float[] buffer = new float[16];
         matrix.get(buffer);
         glUniformMatrix4fv(location, false, buffer);
+    }
+
+    public void setMatrix3f(String name, Matrix3f matrix) {
+        int location = glGetUniformLocation(programId, name);
+        float[] buffer = new float[9];
+        matrix.get(buffer);
+        glUniformMatrix3fv(location, false, buffer);
     }
 
     public void setVector3f(String name, Vector3f vector) {

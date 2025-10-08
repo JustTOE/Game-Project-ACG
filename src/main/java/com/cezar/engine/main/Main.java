@@ -190,9 +190,11 @@ class Application {
             lightingManager.renderLitObject(
                     new Vector3f(1.0f, 0.5f, 0.31f),  // Object color (coral)
                     new Vector3f(1.0f, 1.0f, 1.0f),   // Light color (white)
+                    light.getPosition(),              // Light position
                     modelMatrix,
                     camera.getLookAt(),
-                    projection
+                    projection,
+                    camera
             );
 
             // Render light source cube
