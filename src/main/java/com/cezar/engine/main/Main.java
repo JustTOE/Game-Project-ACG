@@ -17,6 +17,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
 
+import static java.lang.Math.sin;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -196,6 +197,8 @@ class Application {
                     projection,
                     camera
             );
+
+
 
             // Render light source cube
             lightingManager.renderLightCube(light, camera.getLookAt(), projection);

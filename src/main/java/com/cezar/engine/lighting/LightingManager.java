@@ -6,6 +6,8 @@ import com.cezar.engine.utils.MathUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
+import static java.lang.Math.sin;
+import static org.lwjgl.glfw.GLFW.glfwGetTime;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
@@ -115,7 +117,23 @@ public class LightingManager {
         lightingShader.setMatrix4f("projection", projection);
         lightingShader.setMatrix3f("normalMatrix", MathUtils.computeNormalMat3f(model));
         lightingShader.setVector3f("viewPos", camera.getPosition());
+        lightingShader.setVector3f("material.ambient", 1.0f, 0.5f, 0.31f);
+        lightingShader.setVector3f("material.diffuse", 1.0f, 0.5f, 0.31f);
+        lightingShader.setVector3f("material.specular", 0.5f, 0.5f, 0.5f);
+        lightingShader.setFloat("material.shininess", 32.0f);
+        lightingShader.setVector3f("light.ambient",  0.2f, 0.2f, 0.2f);
+        lightingShader.setVector3f("light.diffuse",  0.5f, 0.5f, 0.5f); // darken diffuse light a bit
+        lightingShader.setVector3f("light.specular", 1.0f, 1.0f, 1.0f);
 
+        lightColor.x = (float)sin(glfwGetTime() * 2.0f);
+        lightColor.y = (float)sin(glfwGetTime() * 0.7f);
+        lightColor.z = (float)sin(glfwGetTime() * 0.5f);
+
+        Vector3f diffuse = new Vector3f(lightColor).mul(new Vector3f(0.5f));
+        Vector3f ambient = new Vector3f(diffuse).mul(new Vector3f(0.2f));
+
+        lightingShader.setVector3f("light.ambient", ambient);
+        lightingShader.setVector3f("light.diffuse", diffuse);
 
         glBindVertexArray(cubeVao);
         glDrawArrays(GL_TRIANGLES, 0, 36);
