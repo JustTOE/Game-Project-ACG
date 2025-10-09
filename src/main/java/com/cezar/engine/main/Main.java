@@ -144,9 +144,14 @@ class Application {
 
         // Create loaders with dependency injection
         TextureLoader textureLoader = new TextureLoader(resourceManager);
-        Texture texture = textureLoader.loadTexture("src/main/resources/textures/texture.jpg");
-        int textureId = textureLoader.generateTexture(texture);
-        texture.setTextureId(textureId);
+        Texture containerTexture = textureLoader.loadTexture("src/main/resources/textures/container2.png");
+        int textureId_1 = textureLoader.generateTexture(containerTexture);
+        containerTexture.setTextureId(textureId_1);
+
+        Texture specularContainerTexture = textureLoader.loadTexture("src/main/resources/textures/container2_specular.png");
+        int textureId_2 = textureLoader.generateTexture(specularContainerTexture);
+        containerTexture.setTextureId(textureId_2);
+
 
         ModelLoader modelLoader = new ModelLoader(resourceManager);
         Model model = modelLoader.loadModel(vertices, indices);
@@ -185,6 +190,12 @@ class Application {
 
             glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, textureId_1);
+
+            glActiveTexture(GL_TEXTURE1);
+            glBindTexture(GL_TEXTURE_2D, textureId_2);
 
             // Render lit object
             Matrix4f modelMatrix = new Matrix4f().identity();
