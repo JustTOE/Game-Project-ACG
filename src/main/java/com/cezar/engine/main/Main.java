@@ -110,7 +110,7 @@ class Application {
         GL.createCapabilities();
         glViewport(0, 0, 800, 600);
 
-        glfwSetInputMode(window.getHandle(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetInputMode(window.getHandle(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
         glEnable(GL_DEPTH_TEST);
 

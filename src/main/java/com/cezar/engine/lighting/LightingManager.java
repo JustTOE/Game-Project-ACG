@@ -137,6 +137,11 @@ public class LightingManager {
         lightingShader.setVector3f("light.specular", 1.0f, 1.0f, 1.0f);
         lightingShader.setInt("material.diffuse", 0);
         lightingShader.setInt("material.specular", 1);
+        lightingShader.setVector3f("light.direction", -0.2f, -1.0f, -0.3f);
+        lightingShader.setFloat("light.constant", 1.0f);
+        lightingShader.setFloat("light.linear", 0.09f);
+        lightingShader.setFloat("light.quadratic", 0.032f);
+
 
         lightColor.x = (float)sin(glfwGetTime() * 2.0f);
         lightColor.y = (float)sin(glfwGetTime() * 0.7f);
