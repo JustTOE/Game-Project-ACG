@@ -1,15 +1,15 @@
 # Among The Darkness
 
 ## Core Concept
-A dark fantasy roguelike RPG where you awaken in a procedurally generated dungeon maze with no memory of how you arrived. An entity called **Manifestation** has sensed your presence and is slowly hunting you through the corridors. Collect scattered memories, learn about your past and forge your faith.
+A dark fantasy roguelike RPG where you awaken in a procedurally generated dungeon maze with no memory of how you arrived. An entity called **Manifestation** has sensed your presence and is slowly hunting you through the corridors. Collect scattered memories, learn about your past and forge your fate.
 
 ## Characters
 
 ### Main Character
-**Ash Thornfield** is a 24 year old lady who finds herself in a bizzarre and hostile world. She doesn't seem to recall anything, her memory is lost. Ash went through a traumatic life event (car crash leading to passing of her fiance. She blames herself for everything.) and is suffering severe depression. She's wandering around, trying to find information about herself and this place, but she doesn't yet realize that everything around her is her own mind's creation. Ash used to like reading a lot of books when she was a child and was a die hard fan of fantasy stories. The world created by her mind received it's darker tone due to the current state of her mental health. 
+**Ash Thornfield** is a 24 year old lady who finds herself in a bizarre and hostile world. She doesn't seem to recall anything, her memory is lost. Ash went through a traumatic life event (car crash leading to passing of her fiance. She blames herself for everything.) and is suffering severe depression. She's wandering around, trying to find information about herself and this place, but she doesn't yet realize that everything around her is her own mind's creation. Ash used to like reading a lot of books when she was a child and was a die hard fan of fantasy stories. The world created by her mind received it's darker tone due to the current state of her mental health. 
 
 ### Soul Embodiment (Side Characters)
-**Thunder (courage), Aeris (determination), Selene (resilience), Vivian (curiosity), Rain (cowardice), Serephine (despair), Mist (fragility), Ivy (indifference)** are side characters that Ash will meet throughout her journey representing personality traits. Depending on the outcome of their interractions she will face a different faith. 
+**Thunder (courage), Aeris (determination), Selene (resilience), Vivian (curiosity), Rain (cowardice), Serephine (despair), Mist (fragility), Ivy (indifference)** are side characters that Ash will meet throughout her journey representing personality traits. Depending on the outcome of their interractions she will face a different fate. 
 
 ### Reminiscence (Friendly NPCs)
 - **Miriam the Cartographer** - Sells map fragments that unlock new maze sections, allowing progression
@@ -27,8 +27,8 @@ A dark fantasy roguelike RPG where you awaken in a procedurally generated dungeo
 ### Manifestation
 - **** spawns at a distant point in the maze and begins methodically tracking the player
 - Visual/audio cues intensify as it gets closer (distant footsteps, walls trembling, shadows growing longer)
-- The Hollow Veil moves in real-time but slowly—creating constant tension without rushing the player
-- If encountered too early in the story, The Hollow Veil is *nearly* invincible, forcing retreat or death
+- Manifestation moves in real-time but slowly—creating constant tension without rushing the player
+- If encountered too early in the story, Manifestation is *nearly* invincible, forcing retreat or death
 
 ### Combat & Progression (RPG Elements)
 - **Smaller enemies** (The Lost One) patrol the area and dealing damage during encounters
@@ -41,7 +41,7 @@ A dark fantasy roguelike RPG where you awaken in a procedurally generated dungeo
 
 ### Soul Cards
 - Used as a weapon
-- Have static main stat and modifyable sub stat
+- Have static main stat and modifiable sub stat
 - Card Overlapping: merge 2 cards of same rarity to obtain 1 card having sub stats from 2 merged cards 
 - Card Incineration: discard a card to obtain Essence at a lowered rate
 - Card Rarity: Common, Rare, Epic, Legendary. Common rarity cards drop most often and are the weakest while legendary cards are hidden behind a mini boss and can only be obtained once. Legendary cards have highest main stat and have a special effect (creating burning zone, freezing, pulling enemies in etc)
@@ -56,7 +56,7 @@ A dark fantasy roguelike RPG where you awaken in a procedurally generated dungeo
 **I am the strongest! (Neutral Ending)**
 - Choosing equivalent amount of right and wrong dialogue options Ash doesn't uncover who Manifestation truly is
 - Ash still defeats Manifestation
-- Ash remains in the imaginary world feeding up to her delusions (the game doesn't reveal that to the player)
+- Ash remains in the imaginary world feeding up her delusions (the game doesn't reveal that to the player)
 
 **Lost in The Woods (Bad Ending)**
 - Choosing bad dialogue options Ash progressively loses motivation 
@@ -101,7 +101,7 @@ A dark fantasy roguelike RPG where you awaken in a procedurally generated dungeo
 - Environmental hazards (collapsing floors, poison gas rooms)
 
 ## Replayability (if we have enough time)
-- Hardcore mode with stronger enemies, less resources and even lower survivability.
+- Hardcore mode with stronger enemies, less resources and even lower survivability
 
 
 *Everything here is a subject to be changed/adjusted*
