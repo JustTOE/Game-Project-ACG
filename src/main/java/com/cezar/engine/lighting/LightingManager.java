@@ -141,6 +141,10 @@ public class LightingManager {
         lightingShader.setFloat("light.constant", 1.0f);
         lightingShader.setFloat("light.linear", 0.09f);
         lightingShader.setFloat("light.quadratic", 0.032f);
+        lightingShader.setVector3f("light.position", camera.getPosition());
+        lightingShader.setVector3f("light.direction", camera.getFront());
+        lightingShader.setFloat("light.cutOff", (float)Math.cos(Math.toRadians(12.5f)));
+        lightingShader.setFloat("light.outerCutOff", (float)Math.cos(Math.toRadians(17.5f)));
 
 
         lightColor.x = (float)sin(glfwGetTime() * 2.0f);
